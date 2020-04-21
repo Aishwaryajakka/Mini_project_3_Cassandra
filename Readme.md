@@ -1,23 +1,23 @@
-================================
-Cloud Computing Mini Project 3 - Queries
-================================
+
+# Cloud Computing Mini Project 3 - Queries
+
 
 Preprocess data: split PATH Column into 3 columns: METHOD, PATH and PROTOCOL
 (Python notebook with data preprocessing steps attached)
 
-======
-PART 2
-======
 
-# Step 1 - start Cassandra on all 3 VMs using command: sudo cassandra -Rf
-# Step 2 - start CQL shell: cqlsh CC-MON-3
+# PART 2
 
-# Create Keyspace
+
+## Step 1 - start Cassandra on all 3 VMs using command: sudo cassandra -Rf
+## Step 2 - start CQL shell: cqlsh CC-MON-3
+
+### Create Keyspace
 
 CREATE KEYSPACE online_accesslog_ks WITH replication = { 'class': 'SimpleStrategy', 'replication_factor' : 2};
 
 
-#Create table
+### Create table
 
 CREATE TABLE online_accesslog_ks.table1 (
 ID int,
@@ -27,23 +27,23 @@ PRIMARY KEY((ID), IP, PATH)
 );
 
 
-# Import Data from CSV
+### Import Data from CSV
 
 COPY online_accesslog_ks.table1 (ID,IP,PATH) FROM '/home/student/Mini_proj_3/access_logs_paths.csv' WITH  DELIMITER= ',' AND HEADER = TRUE and NULL = 'null';
 
-# CREATE INDEX
+### CREATE INDEX
 
 CREATE INDEX ip_index ON online_accesslog_ks.table1 (IP);
 
 CREATE INDEX path_index ON online_accesslog_ks.table1(PATH);
 
 
-======
-PART 3
-======
+
+# PART 3
 
 
-Part 3.1: How many hits were made to the website item “/assets/img/release-schedule- logo.png”?
+
+### Part 3.1: How many hits were made to the website item “/assets/img/release-schedule- logo.png”?
 
 SELECT COUNT(*)
 	FROM online_accesslog_ks.table1
@@ -52,7 +52,7 @@ SELECT COUNT(*)
 
  
 
-Part 3.2: How many hits were made from the IP: 10.207.188.188?
+### Part 3.2: How many hits were made from the IP: 10.207.188.188?
 
 SELECT COUNT(*)
 	FROM online_accesslog_ks.table1
@@ -60,13 +60,13 @@ SELECT COUNT(*)
 	ALLOW FILTERING;
 
 
-============
-Part 3.3 and 3.4
-============
 
-=======
-Queries:
-=======
+## Part 3.3 and 3.4
+
+
+
+#### Queries:
+
 
 User-defined function 1:
 
@@ -122,9 +122,9 @@ STYPE map<text, int>
 FINALFUNC find_max_count
 INITCOND {};
 
-================
-Queries For Results:
-================
+
+### Queries For Results:
+
 
 3.3. Which path in the website has been hit most? How many hits were made to the path?
 
